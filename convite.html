@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convite · Bíblia em 10 Minutos</title>
+<meta name="description" content="Dez minutos por dia com Deus. Veja como personagens da Bíblia agiram quando sentiram o mesmo que você. Grátis, sem anúncios e sem cadastro.">
+<meta property="og:title" content="Bíblia em 10 Minutos">
+<meta property="og:description" content="Dez minutos por dia com Deus. Grátis, sem anúncios e sem cadastro.">
+<style>
+  :root { --bg: #f4f1e8; --paper: #fffdf8; --ink: #1e2c26; --muted: #546158; --green: #173f35; --gold: #805b1d; --border: #dadde5; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #141e19; --paper: #1e2a23; --ink: #edf3ec; --muted: #b6c2b9; --green: #b8dcc4; --gold: #e4bf72; --border: #415246; }
+  }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 40px 16px 64px; }
+  .eyebrow { color: var(--gold); font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 0; }
+  h1 { font-family: Georgia, serif; color: var(--green); font-size: 2rem; line-height: 1.2; margin: 6px 0 12px; }
+  .card { background: var(--paper); border: 1px solid var(--border); border-radius: 18px; padding: 18px 20px; margin: 20px 0; }
+  .button { display: block; text-align: center; text-decoration: none; font-weight: 600; border-radius: 14px; padding: 14px 16px; margin: 12px 0; }
+  .primary { background: #1d4a3e; color: #fff; }
+  .secondary { border: 1px solid var(--border); color: var(--green); background: var(--paper); }
+  .muted { color: var(--muted); font-size: .9rem; }
+  [hidden] { display: none; }
+  p a { color: var(--green); }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Bíblia em 10 Minutos</p>
+  <h1 id="titulo">Dez minutos por dia com Deus</h1>
+  <p id="texto">Alguém quis caminhar com você na Palavra. No app, você conta como está se sentindo e vê como personagens da Bíblia agiram quando sentiram o mesmo, o que aconteceu com cada um e qual passo dar hoje.</p>
+
+  <div class="card">
+    <a class="button primary" id="abrir" href="biblia10minutos://today">Já tenho o app: abrir</a>
+    <a class="button secondary" id="baixar" href="#" hidden>Baixar na App Store</a>
+    <p class="muted" id="em-breve">O app chega em breve à App Store. Guarde este link: ele vai levar você direto para lá.</p>
+  </div>
+
+  <p class="muted">Grátis, sem anúncios e sem cadastro. O que você escreve no app fica só no seu celular. <a href="privacidade.html">Política de privacidade</a>.</p>
+</main>
+<script>
+  // Preencha quando o app estiver publicado, por exemplo "https://apps.apple.com/app/id0000000000".
+  var APP_STORE_URL = "";
+  var FICHAS = {
+"frustracao": "Frustração por não conseguir o que sonhei",
+"desespero": "Desespero com falta de recursos",
+"culpa": "Culpa por algo que fiz",
+"magoa": "Mágoa de alguém que me feriu",
+"pressao": "Pressão para decidir logo",
+"decepcao": "Decepção com alguém",
+"ansiedade": "Ansiedade: quando a mente corre na frente",
+"crise": "Crise: quando um problema vem atrás do outro",
+"nao-entendo": "Não entendo o que Deus está fazendo",
+"tristeza": "Tristeza que aperta o peito",
+"solidao": "Solidão",
+"tentacao": "Tentação: quando o erro parece fácil",
+"cansaco": "Cansaço: quando já não dá mais",
+"espera": "Espera: quando a resposta demora",
+"doenca": "Doença: quando o corpo não responde",
+"ira": "Ira: quando a raiva quer decidir por mim",
+"inveja": "Inveja: quando a vitória do outro me incomoda",
+"filhos": "Preocupação com um filho",
+"luto": "Luto: a saudade de quem partiu",
+"pratica": "Sei o que devo fazer, mas não faço",
+"contradicoes": "Tudo parece contrário ao que eu esperava de Deus",
+"mudanca": "Peço a Deus, mas não mudo",
+"autoexame": "Só enxergo o erro dos outros",
+"afastado": "Esfriei e me afastei de Deus",
+"responsabilidade": "Marido e pai: estou assumindo a minha parte?",
+"casamento": "Meu casamento está difícil",
+"proposito": "Não sei para que estou aqui",
+"vazio": "Tenho tudo, mas sinto um vazio",
+"correcao": "Sinto que Deus está me corrigindo",
+"gratidao": "Gratidão: quando recebi o que pedi",
+"paz": "Paz: quando a vida está tranquila",
+"alegria": "Alegria: quando o coração está em festa",
+"esperanca": "Esperança: em que ela está apoiada?",
+"recomeco": "Recomeço: quando uma fase nova começa"
+};
+
+  var ficha = new URLSearchParams(location.search).get("ficha");
+  if (ficha && Object.prototype.hasOwnProperty.call(FICHAS, ficha)) {
+    document.getElementById("titulo").textContent = FICHAS[ficha];
+    document.getElementById("texto").textContent = "Alguém enviou para você esta história da Bíblia: quem sentiu o mesmo que você, como cada um agiu e onde isso levou. No app, você vê o que aconteceu e escolhe um passo para hoje.";
+    document.getElementById("abrir").href = "biblia10minutos://ficha?id=" + encodeURIComponent(ficha);
+    document.getElementById("abrir").textContent = "Já tenho o app: abrir esta história";
+  }
+  if (APP_STORE_URL) {
+    var baixar = document.getElementById("baixar");
+    baixar.href = APP_STORE_URL;
+    baixar.hidden = false;
+    document.getElementById("em-breve").hidden = true;
+  }
+</script>
+</body>
+</html>
